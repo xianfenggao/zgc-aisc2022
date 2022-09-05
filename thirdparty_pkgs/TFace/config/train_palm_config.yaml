@@ -1,0 +1,45 @@
+SEED: 1337 # random seed for reproduce results
+INDEX_ROOT: '/youtu-face/train_data/'
+DATASETS: # the dataset index name
+  - name: polyu
+    batch_size: 128
+    class_nums: 1200
+    DATA_ROOT: '/home/xianfenggao/dataset/PolyU/' # the parent root where your train/val/test Tdata are stored
+    weight: 1.
+  - name: tongji
+    batch_size: 128
+    class_nums: 600
+    DATA_ROOT: '/home/xianfenggao/dataset/TongJi/' # the parent root where your train/val/test Tdata are stored
+    weight: 1.
+
+
+BACKBONE_RESUME: ""
+HEAD_RESUME: ""
+META_RESUME: ""
+
+BACKBONE_NAME: 'IR_SE_50'
+SPLITBN: false
+DIST_FC: true
+TFRRECORD: true
+MODEL_ROOT: './output/TFace/train_palm/IR_SE_50/ckpt/' # the root to buffer your checkpoints
+LOG_ROOT: './output/TFace/train_palm/IR_SE_50//tensorboard' # the root to log your train/val status
+HEAD_NAME: "CurricularFace" # support:  ['ArcFace', 'CurricularFace', 'CosFace']
+LOSS_NAME: 'DistCrossEntropy' # support: ['DistCrossEntropy', 'Softmax']
+INPUT_SIZE: [ 112, 112 ] # support: [112, 112] and [224, 224]
+RGB_MEAN: [ 0.5, 0.5, 0.5 ] # for normalize inputs to [-1, 1]
+RGB_STD: [ 0.5, 0.5, 0.5 ]
+EMBEDDING_SIZE: 512 # feature dimension
+LR: 0.1 # initial LR
+START_EPOCH: 0 # start epoch
+WARMUP_STEP: -1
+NUM_EPOCH: 15 # total epoch number
+WEIGHT_DECAY: 0.0005 # do not apply to batch_norm parameters
+MOMENTUM: 0.9
+STAGES: [ 8, 12 ] # epoch stages to decay learning rate
+WORLD_SIZE: 1
+RANK: 0
+LOCAL_RANK: 0
+DIST_BACKEND: 'nccl'
+DIST_URL: 'env://'
+NUM_WORKERS: 2
+AMP: true # fp16 for backbone

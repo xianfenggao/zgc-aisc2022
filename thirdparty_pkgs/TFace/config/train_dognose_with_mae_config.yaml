@@ -1,0 +1,40 @@
+SEED: 1337 # random seed for reproduce results
+INDEX_ROOT: '/youtu-face/train_data/'
+DATASETS: # the dataset index name
+  - name: dognose
+    batch_size: 125
+    class_nums: 6000
+    DATA_ROOT: 'data/pet_biometric_challenge_2022/' # the parent root where your train/val/test data are stored
+    weight: 1.
+
+
+BACKBONE_RESUME: ""
+HEAD_RESUME: ""
+META_RESUME: ""
+
+BACKBONE_NAME: 'IR_SE_50'
+SPLITBN: false
+DIST_FC: true
+TFRRECORD: true
+MODEL_ROOT: './output/TFace/train_dognose/IR_SE_50/mae/ckpt/' # the root to buffer your checkpoints
+LOG_ROOT: './output/TFace/train_dognose/IR_SE_50/mae/tensorboard' # the root to log your train/val status
+HEAD_NAME: "CurricularFace" # support:  ['ArcFace', 'CurricularFace', 'CosFace'
+INPUT_SIZE: [ 112, 112 ] # support: [112, 112] and [224, 224]]
+LOSS_NAME: 'Softmax' # support: ['DistCrossEntropy', 'Softmax']
+RGB_MEAN: [ 0.5, 0.5, 0.5 ] # for normalize inputs to [-1, 1]
+RGB_STD: [ 0.5, 0.5, 0.5 ]
+EMBEDDING_SIZE: 512 # feature dimension
+LR: 0.5 # initial LR
+START_EPOCH: 0 # start epoch
+WARMUP_STEP: -1
+NUM_EPOCH: 15 # total epoch number
+WEIGHT_DECAY: 0.0005 # do not apply to batch_norm parameters
+MOMENTUM: 0.9
+STAGES: [ 8, 13 ] # epoch stages to decay learning rate
+WORLD_SIZE: 1
+RANK: 0
+LOCAL_RANK: 0
+DIST_BACKEND: 'nccl'
+DIST_URL: 'env://'
+NUM_WORKERS: 4
+AMP: true # fp16 for backbone
